@@ -5,7 +5,9 @@ enum front_end_error_t
 {
 	NOT_ERROR 				             = 0,
 	NOT_MEMORY_FOR_LIST_OF_FUNC          = 1,
-	NOT_MEMORY_FOR_REALLOC__LIST_OF_FUNC = 2
+	NOT_MEMORY_FOR_REALLOC__LIST_OF_FUNC = 2,
+	NOT_FIND_FILE_WITH_PROGRAM           = 3,
+	NOT_MEMORY_FOR_STR_WITH_PROGRAM      = 4
 };
 
 //--------------------------------------------------------------------------------
@@ -62,6 +64,10 @@ struct list_of_func_t
 	size_t            free_index;
 };
 
-//-----------------------------------------------------------------------------------
+//--------------------------------------------------------------------------------------
+
+const int POSITION_NAME_FILE_IN_ARGV = 1;
+
+//---------------------------------------------------------------------------------------
 
 #endif

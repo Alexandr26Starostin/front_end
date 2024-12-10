@@ -5,12 +5,12 @@
 #include "const_in_front_end.h"
 #include "list_of_func.h"
 
-#define FILL_LIST_OF_FUNC_(value_code_func, str_with_name_func)                                                 \
-	case value_code_func:                                                                              \
-	{                                                                                            \
+#define FILL_LIST_OF_FUNC_(value_code_func, str_with_name_func)                                         \
+	case value_code_func:                                                                               \
+	{                                                                                                   \
 		(list_of_func -> array_of_func)[list_of_func -> free_index].code_func = value_code_func;        \
-		(list_of_func -> array_of_func)[list_of_func -> free_index].name_func = str_with_name_func;        \
-		break;                                                                                   \
+		(list_of_func -> array_of_func)[list_of_func -> free_index].name_func = str_with_name_func;     \
+		break;                                                                                          \
 	} 
 
 static front_end_error_t fill_list_of_func    (list_of_func_t* list_of_func);
@@ -83,6 +83,7 @@ static front_end_error_t fill_list_of_func (list_of_func_t* list_of_func)
 			FILL_LIST_OF_FUNC_(ROUND_END,   "лети");
 			FILL_LIST_OF_FUNC_(CURLY_BEGIN, "взлёт");
 			FILL_LIST_OF_FUNC_(CURLY_END,   "приземление");
+			FILL_LIST_OF_FUNC_(COMMENT,     "от_винта");
 
 			default:    //В этом случае значение list_of_func -> free_index больше значения enum, =>, все базовые функции записаны.
 			{
@@ -124,7 +125,7 @@ front_end_error_t dump_list_of_func (list_of_func_t* list_of_func)
 	assert (list_of_func);
 
 	printf ("\n\n------------------------------------------------------------------\n\n");
-	printf ("list_of_func:\nsize_of_list == %ld\nfree_index   == %ld\n\n", list_of_func -> size_of_list, list_of_func -> free_index);
+	printf ("list_of_func:\n\nsize_of_list == %ld\nfree_index   == %ld\n\n", list_of_func -> size_of_list, list_of_func -> free_index);
 
 	printf ("index    code_func    name_func\n");
 
