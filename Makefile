@@ -1,6 +1,6 @@
 CC=g++
 FLAGS=-Iinclude -Wshadow -Winit-self -Wredundant-decls -Wcast-align -Wundef -Wfloat-equal -Winline -Wunreachable-code -Wmissing-declarations -Wmissing-include-dirs -Wswitch-enum -Wswitch-default -Weffc++ -Wmain -Wextra -Wall -g -pipe -fexceptions -Wcast-qual -Wconversion -Wctor-dtor-privacy -Wempty-body -Wformat-security -Wformat=2 -Wignored-qualifiers -Wlogical-op -Wmissing-field-initializers -Wnon-virtual-dtor -Woverloaded-virtual -Wpointer-arith -Wsign-promo -Wstack-usage=8192 -Wstrict-aliasing -Wstrict-null-sentinel -Wtype-limits -Wwrite-strings -D_DEBUG -D_EJUDGE_CLIENT_SIDE -D_EJC
-FILES=main.o
+FILES=main.o list_of_func.o launch_front_end.o
 TARGET=front_end
 
 # pathsub
@@ -20,6 +20,12 @@ $(TARGET): $(FILES)
 
 main.o: src/main.cpp
 	@$(CC) -c $(FLAGS) src/main.cpp -o build/main.o
+
+list_of_func.o: src/list_of_func.cpp
+	@$(CC) -c $(FLAGS) src/list_of_func.cpp -o build/list_of_func.o
+
+launch_front_end.o: src/launch_front_end.cpp
+	@$(CC) -c $(FLAGS) src/launch_front_end.cpp -o build/launch_front_end.o
 
 clean:
 	rm -rf $(TARGET)
