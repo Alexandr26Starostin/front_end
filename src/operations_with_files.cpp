@@ -26,10 +26,14 @@ front_end_error_t read_program_file (int argc, char** argv, char** ptr_str_with_
 		printf ("\n\nError in %s:%d\n"
 		        "not memory for str_with_program\n\n", __FILE__, __LINE__);
 
+		fclose (program_file);
+
 		return NOT_MEMORY_FOR_STR_WITH_PROGRAM;
 	}
 
 	fread (*ptr_str_with_program, sizeof (char), len_file, program_file);
+
+	fclose (program_file);
 
 	return NOT_ERROR;
 }

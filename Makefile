@@ -1,6 +1,6 @@
 CC=g++
 FLAGS=-Iinclude -Wshadow -Winit-self -Wredundant-decls -Wcast-align -Wundef -Wfloat-equal -Winline -Wunreachable-code -Wmissing-declarations -Wmissing-include-dirs -Wswitch-enum -Wswitch-default -Weffc++ -Wmain -Wextra -Wall -g -pipe -fexceptions -Wcast-qual -Wconversion -Wctor-dtor-privacy -Wempty-body -Wformat-security -Wformat=2 -Wignored-qualifiers -Wlogical-op -Wmissing-field-initializers -Wnon-virtual-dtor -Woverloaded-virtual -Wpointer-arith -Wsign-promo -Wstack-usage=8192 -Wstrict-aliasing -Wstrict-null-sentinel -Wtype-limits -Wwrite-strings -D_DEBUG -D_EJUDGE_CLIENT_SIDE -D_EJC
-FILES=main.o list_of_func.o launch_front_end.o lexical_analysis.o operations_with_files.o name_table.o tokens.o
+FILES=main.o list_of_func.o launch_front_end.o lexical_analysis.o operations_with_files.o name_table.o tokens.o tree.o recursive_descent.o
 TARGET=front_end
 
 # pathsub
@@ -38,6 +38,12 @@ name_table.o: src/name_table.cpp
 
 tokens.o: src/tokens.cpp
 	@$(CC) -c $(FLAGS) src/tokens.cpp -o build/tokens.o
+
+tree.o: src/tree.cpp
+	@$(CC) -c $(FLAGS) src/tree.cpp -o build/tree.o
+
+recursive_descent.o: src/recursive_descent.cpp
+	@$(CC) -c $(FLAGS) src/recursive_descent.cpp -o build/recursive_descent.o
 
 clean:
 	rm -rf $(TARGET)

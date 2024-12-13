@@ -8,6 +8,7 @@
 #include "name_table.h"
 #include "tokens.h"
 #include "lexical_analysis.h"
+#include "tree.h"
 #include "launch_front_end.h"
 
 front_end_error_t launch_front_end (int argc, char** argv)
@@ -66,6 +67,21 @@ front_end_error_t launch_front_end (int argc, char** argv)
 	dump_array_of_tokens (&tokens);
 
 	//------------------------------------------------------------------------
+	/*create tree*/
+
+	char str_for_system[] = "dot tree.dot -Tsvg -o pictures/diff_0000.svg"; 
+
+	size_t index_picture = 0;
+
+	node_t* root_node = create_node (KEYWORD, OPERATOR, NULL, NULL, NULL);
+	if (root_node == NULL) return NOT_MEMORY_FOR_NEW_NODE;\
+
+	FILE* tree_html = fopen ("tree.html", "w");
+	if (tree_html == NULL) {printf ("Not find tree.html\n"); return NOT_FIND_TREE_HTML;}
+
+	dump_tree (root_node, str_for_system, &index_picture, tree_html);
+
+	//------------------------------------------------------------------------
 	/*recursive descent*/
 
 	//------------------------------------------------------------------------
@@ -77,8 +93,11 @@ front_end_error_t launch_front_end (int argc, char** argv)
 	delete_tokens 	    (&tokens);
 	delete_name_table   (&name_table);
 	delete_list_of_func (&list_of_func);
+	delete_node         (root_node);
 
 	free (str_with_program);
 
 	return status;
 }
+
+//доделать освобождение памяти при срабатывании ошибок через status.

@@ -14,7 +14,10 @@ enum front_end_error_t
 	NOT_MEMORY_FOR_NAME_TABLE              = 5,
 	NOT_MEMORY_FOR_REALLOC_NAME_TABLE      = 6,
 	NOT_MEMORY_FOR_ARRAY_OF_TOKENS         = 7,
-	NOT_MEMORY_FOR_REALLOC_ARRAY_OF_TOKENS = 8
+	NOT_MEMORY_FOR_REALLOC_ARRAY_OF_TOKENS = 8,
+	NOT_MEMORY_FOR_NEW_NODE                = 9,
+	NOT_FIND_TREE_DOT                      = 10,
+	NOT_FIND_TREE_HTML                     = 11
 };
 
 //--------------------------------------------------------------------------------
@@ -26,37 +29,70 @@ const long   WORD_IS_NOT_FUNC  = -1;
 
 enum base_func_t
 {
-	ADD = 0,   // +
-	SUB = 1,   // -
-	MUL = 2,   // *
-	DIV = 3,   // /
+	//------------------------------------------------------------------------------------------
+	/*standard*/
 
-	SIN = 4,   // sin
-	COS = 5,   // cos
-	SH  = 6,   // sinh
-	CH  = 7,   // cosh
+	IF       = 11,      // if 
+	WHILE    = 12,      // while
+	ASSIGN   = 13,      // =
 
-	SQRT = 8,    // sqrt
-	LOG  = 9,    // log
-	LN   = 10,   // ln
-	DEG  = 11,   // ^
+	SIN = 21,   // sin
+	COS = 22,   // cos
 
-	IF       = 12,      // if 
-	WHILE    = 13,      // while
-	MAIN     = 14,      // main
-	INT      = 15,      // int/long
-	ASSIGN   = 16,      // =
-	SCANF    = 17,      // scanf
-	PRINTF   = 18,      // printf
-	OPERATOR = 19,      // ;
-	RETURN   = 20,      // return
+	//FLOOR = 23,
 
-	ROUND_BEGIN = 21,   // (
-	ROUND_END   = 22,   // )
-	CURLY_BEGIN = 23,   // {
-	CURLY_END   = 24,   // }
+	ADD = 24,   // +
+	SUB = 25,   // -
+	MUL = 26,   // *
+	DIV = 27,   // /
 
-	COMMENT     = 25    // //
+	//DIFF = 28,
+
+	SQRT = 29,    // sqrt
+
+	//== = 31,
+	//<  = 32,
+	//>  = 33,
+	//<= = 34,
+	//>= = 35,
+	//!= = 36,
+	//&& = 37,
+	//|| = 38,
+	//!  = 39,
+
+	OPERATOR = 41,      // ;
+
+	//, = 42,
+
+	INT = 51,      // int/long/doubles
+
+	SCANF  = 61,      // scanf
+	PRINTF = 62,      // printf
+
+	RETURN = 71,      // return
+
+	//BREAK    = 72,
+	//CONTINUE = 73,
+	//ABORT    = 74,
+
+	//-------------------------------------------------------------------------------
+	/*other*/
+	
+	SH = 81,   // sinh
+	CH = 82,   // cosh
+
+	LOG = 83,    // log
+	LN  = 84,   // ln
+	DEG = 85,   // ^
+
+	MAIN     = 86,      // main
+	
+	ROUND_BEGIN = 91,   // (
+	ROUND_END   = 92,   // )
+	CURLY_BEGIN = 93,   // {
+	CURLY_END   = 94,   // }
+
+	COMMENT = 95    // //
 };
 
 struct name_base_func_t
@@ -100,14 +136,14 @@ struct name_table_t
 
 const size_t SIZE_ARRAY_OF_TOKENS = 5;
 
-enum type_value_t 
+enum token_type_t 
 {
 	NUM = 1,
 	OP  = 2,
 	ID  = 3
 };
 
-union value_t
+union token_value_t
 {
 	double      value_num;
 	base_func_t value_op;
@@ -116,8 +152,8 @@ union value_t
 
 struct token_t 
 {
-	type_value_t  type;
-	union value_t value;
+	token_type_t        type;
+	union token_value_t value;
 };
 
 struct array_of_tokens_t
@@ -134,5 +170,43 @@ struct array_of_tokens_t
 const size_t MAX_LEN_WORD_FROM_STR = 50;
 
 //---------------------------------------------------------------------------------------
+/*tree*/
+
+const size_t INDEX_NUMBER_OF_PICTURE = 36;
+
+enum node_type_t 
+{
+	CONSTANT            = 1,
+	IDENTIFIER          = 2,
+	KEYWORD             = 3,
+	FUNCTION_DEFINITION = 4,
+	PARAMETERS          = 5,
+	VAR_DECLARATION     = 6,
+	CALL                = 7
+};
+
+union node_value_t
+{
+	double      value_constant;
+	size_t      value_identifier;
+	base_func_t value_keyword;
+	size_t      value_function_definition;
+	double      value_parameters;            //not value_parameters
+	size_t      value_var_declaration;
+	double      value_call;                 //not value_call
+};
+
+struct node_t
+{
+	node_type_t  type;
+	node_value_t value;
+	node_t*      left;
+	node_t*      right;
+	node_t*      parent;
+};
+
+//---------------------------------------------------------------------------------------
 
 #endif
+
+//Добавить типы и изменить value

@@ -43,7 +43,7 @@ front_end_error_t delete_tokens (array_of_tokens_t* tokens)
 	return NOT_ERROR;
 }
 
-front_end_error_t add_token_in_array_of_tokens (array_of_tokens_t* tokens, type_value_t type, double value)
+front_end_error_t add_token_in_array_of_tokens (array_of_tokens_t* tokens, token_type_t type, double value)
 {
 	assert (tokens);
 

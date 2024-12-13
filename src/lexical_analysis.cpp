@@ -50,7 +50,7 @@ front_end_error_t lexical_analysis (array_of_tokens_t* tokens, name_table_t* nam
 
 		if (str_with_program[index_str] == '\n')
 		{
-			strcpy (word_from_str, "\n");
+			strcpy (word_from_str, "\n");          //Не эффективно! Можно решить эту проблему, если сделать разделяющим оператором  не '\n', а, например, ';'.
 			shift_index_str = 1;
 		}
 		else
