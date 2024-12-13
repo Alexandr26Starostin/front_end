@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <assert.h>
+#include <string.h>
 
 #include "const_in_front_end.h"
 #include "list_of_func.h"
@@ -16,12 +17,11 @@
 static front_end_error_t fill_list_of_func    (list_of_func_t* list_of_func);
 static front_end_error_t realloc_list_of_func (list_of_func_t* list_of_func);
 
+//---------------------------------------------------------------------------------------------------------------------------------
+
 front_end_error_t create_list_of_func (list_of_func_t* list_of_func)
 {
 	assert (list_of_func);
-
-	list_of_func -> free_index   = 0;
-	list_of_func -> size_of_list = SIZE_LIST_OF_FUNC;
 
 	list_of_func -> array_of_func = (name_base_func_t*) calloc (SIZE_LIST_OF_FUNC, sizeof (name_base_func_t));
 
@@ -30,6 +30,9 @@ front_end_error_t create_list_of_func (list_of_func_t* list_of_func)
 		printf ("\nError in %s:%d\nNot memory for list_of_func\n\n", __FILE__, __LINE__);
 		return NOT_MEMORY_FOR_LIST_OF_FUNC;
 	}
+
+	list_of_func -> free_index   = 0;
+	list_of_func -> size_of_list = SIZE_LIST_OF_FUNC;
 
 	front_end_error_t status = fill_list_of_func (list_of_func);
 
@@ -54,9 +57,11 @@ static front_end_error_t fill_list_of_func (list_of_func_t* list_of_func)
 
 	front_end_error_t status = NOT_ERROR;
 
-	while (true)
+	size_t value_of_enum = 0;
+
+	while (value_of_enum <= MAX_VALUE_OF_ENUM)
 	{
-		switch (list_of_func -> free_index)
+		switch (value_of_enum)
 		{
 			FILL_LIST_OF_FUNC_(ADD,         "дозаправить");
 			FILL_LIST_OF_FUNC_(SUB,         "ударить");
@@ -85,12 +90,14 @@ static front_end_error_t fill_list_of_func (list_of_func_t* list_of_func)
 			FILL_LIST_OF_FUNC_(CURLY_END,   "приземление");
 			FILL_LIST_OF_FUNC_(COMMENT,     "от_винта");
 
-			default:    //В этом случае значение list_of_func -> free_index больше значения enum, =>, все базовые функции записаны.
+			default:    //Встретилось значение не существующего значения enum
 			{
-				return NOT_ERROR;
+				value_of_enum += 1;
+				continue;
 			}
 		}
 
+		value_of_enum              += 1;
 		list_of_func -> free_index += 1;
 
 		if (list_of_func -> free_index >= list_of_func -> size_of_list)
@@ -114,7 +121,7 @@ static front_end_error_t realloc_list_of_func (list_of_func_t* list_of_func)
 	if (list_of_func -> array_of_func == NULL)
 	{
 		printf ("\nError in %s:%d\nNot memory for realloc of list_of_func\n\n", __FILE__, __LINE__);
-		return NOT_MEMORY_FOR_REALLOC__LIST_OF_FUNC;
+		return NOT_MEMORY_FOR_REALLOC_LIST_OF_FUNC;
 	}
 
 	return NOT_ERROR;
@@ -143,4 +150,18 @@ front_end_error_t dump_list_of_func (list_of_func_t* list_of_func)
 	return NOT_ERROR;
 }
 
+long find_word_in_list_of_func (list_of_func_t* list_of_func, char* find_word)
+{
+	assert (list_of_func);
+	assert (find_word);
 
+	for (size_t index = 0; index < list_of_func -> free_index; index++)
+	{
+		if (strcmp ((list_of_func -> array_of_func)[index].name_func, find_word) == 0)
+		{
+			return (long) (list_of_func -> array_of_func)[index].code_func;
+		}
+	}
+
+	return WORD_IS_NOT_FUNC;
+}

@@ -8,6 +8,8 @@
 static FILE*  find_program_file (int argc, char** argv);
 static size_t count_len_file    (FILE* file);
 
+//---------------------------------------------------------------------------------------------------------
+
 front_end_error_t read_program_file (int argc, char** argv, char** ptr_str_with_program)
 {
 	assert (argv);

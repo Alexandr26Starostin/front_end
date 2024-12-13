@@ -5,7 +5,5 @@
 
 int main (int argc, char** argv)
 {
-	printf ("Привет!\n");
-	
 	return launch_front_end (argc, argv);
 }
