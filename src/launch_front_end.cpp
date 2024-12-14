@@ -9,6 +9,7 @@
 #include "tokens.h"
 #include "lexical_analysis.h"
 #include "tree.h"
+#include "recursive_descent.h"
 #include "launch_front_end.h"
 
 front_end_error_t launch_front_end (int argc, char** argv)
@@ -73,6 +74,8 @@ front_end_error_t launch_front_end (int argc, char** argv)
 
 	size_t index_picture = 0;
 
+	//node_t* root_node = NULL;
+
 	node_t* root_node = create_node (KEYWORD, OPERATOR, NULL, NULL, NULL);
 	if (root_node == NULL) return NOT_MEMORY_FOR_NEW_NODE;\
 
@@ -83,6 +86,11 @@ front_end_error_t launch_front_end (int argc, char** argv)
 
 	//------------------------------------------------------------------------
 	/*recursive descent*/
+
+	status = recursive_descent (&tokens, root_node);
+	if (status) {return status;}
+
+	dump_tree (root_node, str_for_system, &index_picture, tree_html);
 
 	//------------------------------------------------------------------------
 	/*write AST, name_table and local name_tables in files*/

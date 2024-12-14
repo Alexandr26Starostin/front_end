@@ -34,7 +34,7 @@ node_t* create_node (node_type_t type, double value, node_t* left, node_t* right
 			break;
 		
 		case IDENTIFIER:
-			(new_node -> value).value_identifier = (size_t) value;
+			(new_node -> value).value_identifier.index_id_in_name_table = (size_t) value;
 			break;
 		
 		case KEYWORD:
@@ -138,7 +138,7 @@ static front_end_error_t print_edge (node_t* node, FILE* file_tree)
 			case IDENTIFIER:
 				fprintf (file_tree, "node_%p [shape=record, label = \"{%ld| {type = %d (IDENTIFIER) | left = %p | node = %p | parent = %p | right = %p}}\" "
 									"style=\"filled\",fillcolor=\"blue\"]\n\n\t", 
-									node, (node -> value).value_identifier, node -> type, node -> left, node, node -> parent, node -> right);
+									node, (node -> value).value_identifier.index_id_in_name_table, node -> type, node -> left, node, node -> parent, node -> right);
 				break;
 			
 			case KEYWORD:

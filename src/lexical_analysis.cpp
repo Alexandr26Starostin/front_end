@@ -9,7 +9,8 @@
 #include "tokens.h"
 #include "lexical_analysis.h"
 
-static front_end_error_t skip_symbols (char* str_with_program, size_t* ptr_index_str);
+static front_end_error_t skip_symbols  (char* str_with_program, size_t* ptr_index_str);
+static front_end_error_t skip_comments (char* str_with_program, size_t* ptr_index_str);
 
 //------------------------------------------------------------------------------------
 
@@ -64,6 +65,12 @@ front_end_error_t lexical_analysis (array_of_tokens_t* tokens, name_table_t* nam
 
 		if (value_of_enum_for_word != WORD_IS_NOT_FUNC)
 		{
+			if (value_of_enum_for_word == (long) COMMENT)
+			{
+				skip_comments (str_with_program, &index_str);
+				continue;
+			} 
+
 			status = add_token_in_array_of_tokens (tokens, OP, (double) value_of_enum_for_word);
 			if (status) {return status;}
 
@@ -100,6 +107,18 @@ static front_end_error_t skip_symbols (char* str_with_program, size_t* ptr_index
 	{
 		*ptr_index_str += 1;
 	}
+
+	return NOT_ERROR;
+}
+
+static front_end_error_t skip_comments (char* str_with_program, size_t* ptr_index_str)
+{
+	assert (str_with_program);
+	assert (ptr_index_str);
+
+	while (str_with_program[*ptr_index_str] != '\n') {*ptr_index_str += 1;}
+
+	*ptr_index_str += 1;
 
 	return NOT_ERROR;
 }

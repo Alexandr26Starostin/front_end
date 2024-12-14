@@ -52,6 +52,8 @@ front_end_error_t add_name_in_table (name_table_t* name_table, size_t index_to_n
 	{
 		(name_table -> name_table)[name_table -> free_index].index_to_name_in_str = index_to_name_in_str;
 		(name_table -> name_table)[name_table -> free_index].len_name             = len_name;
+		(name_table -> name_table)[name_table -> free_index].type                 = UNKNOW_TYPE;
+		(name_table -> name_table)[name_table -> free_index].status               = NOT_DEFINITE;
 
 		name_table -> free_index += 1;
 
@@ -108,27 +110,34 @@ front_end_error_t dump_name_table   (name_table_t* name_table, char* str_with_pr
 	printf ("\n\n------------------------------------------------------------------\n\n");
 	printf ("name_table:\n\nsize_of_name_table == %ld\nfree_index         == %ld\n\n", name_table-> size_of_name_table, name_table-> free_index);
 
+	printf ("type:\nUNKNOW_TYPE == 0\nNAME_VAR    == 1\nNAME_FUNC   == 2\nNAME_TYPE   == 4\n\n");
+	
+	printf ("status_of_declaration:\nNOT_DEFINITE == 0\nDEFINITE     == 1\n\n");
+
 	if (str_with_program == NULL)
 	{
-		printf ("index    index_to_name_in_str    len_name\n");
+		printf ("index    index_to_name_in_str    len_name    type    status_of_declaration\n");
 
 		for (size_t index = 0; index < name_table -> free_index; index++)
-		{
-			
-			printf ("%5ld    %20ld    %8ld\n", index, (name_table -> name_table)[index].index_to_name_in_str, 
-													  (name_table -> name_table)[index].len_name);
+		{	
+			printf ("%5ld    %20ld    %8ld    %4d    %21d\n", index, (name_table -> name_table)[index].index_to_name_in_str, 
+													  (name_table -> name_table)[index].len_name, 
+													  (name_table -> name_table)[index].type,
+													  (name_table -> name_table)[index].status);
 		}
 	}
 
 	else   //str_with_program != NULL
 	{
-		printf ("index    index_to_name_in_str    len_name    name_of_id\n");
+		printf ("index    index_to_name_in_str    len_name    type    status_of_declaration    name_of_id\n");
 
 		for (size_t index = 0; index < name_table -> free_index; index++)
 		{
 			
-			printf ("%5ld    %20ld    %8ld    ", index, (name_table -> name_table)[index].index_to_name_in_str, 
-													    (name_table -> name_table)[index].len_name);
+			printf ("%5ld    %20ld    %8ld    %4d    %21d    ", index, (name_table -> name_table)[index].index_to_name_in_str, 
+													    (name_table -> name_table)[index].len_name, 
+														(name_table -> name_table)[index].type, 
+														(name_table -> name_table)[index].status);
 
 			print_symbols_from_str (str_with_program + (name_table -> name_table)[index].index_to_name_in_str, 
 			                                           (name_table -> name_table)[index].len_name);
