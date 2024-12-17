@@ -89,6 +89,14 @@ static front_end_error_t fill_list_of_func (list_of_func_t* list_of_func)
 			FILL_LIST_OF_FUNC_(CURLY_BEGIN, "взлёт");
 			FILL_LIST_OF_FUNC_(CURLY_END,   "приземление");
 			FILL_LIST_OF_FUNC_(COMMENT,     "от_винта");
+			FILL_LIST_OF_FUNC_(EQUALLY,     "работает?");
+			FILL_LIST_OF_FUNC_(LESS,        "крен");
+			FILL_LIST_OF_FUNC_(NO_MORE,     "элерон");
+			FILL_LIST_OF_FUNC_(NO_LESS,     "хвост");
+			FILL_LIST_OF_FUNC_(NOT_EQUALLY, "керосин");
+			FILL_LIST_OF_FUNC_(AND,         "горизонт");
+			FILL_LIST_OF_FUNC_(OR,          "вариометр");
+			FILL_LIST_OF_FUNC_(NOT,         "крайний");
 
 			default:    //Встретилось значение не существующего значения enum
 			{

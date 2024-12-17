@@ -89,15 +89,15 @@ enum base_func_t
 
 	SQRT = 29,    // sqrt
 
-	//== = 31,
-	//<  = 32,
-	//>  = 33,
-	//<= = 34,
-	//>= = 35,
-	//!= = 36,
-	//&& = 37,
-	//|| = 38,
-	//!  = 39,
+	EQUALLY     = 31,    // ==
+	LESS        = 32,    // <
+	MORE        = 33,    // >
+	NO_MORE     = 34,    // <=
+	NO_LESS     = 35,    // >=
+	NOT_EQUALLY = 36,    // !=
+	AND         = 37,    // &&
+	OR          = 38,    // ||
+	NOT         = 39,    // !
 
 	OPERATOR = 41,      // ;
 
@@ -268,6 +268,16 @@ struct node_t
 	node_t*      left;
 	node_t*      right;
 	node_t*      parent;
+};
+
+//--------------------------------------------------------------------------------------
+/*recursive_descent*/
+
+struct syntactic_parameters_t
+{
+	array_of_tokens_t* tokens;
+	size_t             index_token;
+	long               scope;
 };
 
 //---------------------------------------------------------------------------------------
